@@ -1,16 +1,19 @@
-// ELEMENTOS DE NAVEGACION
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
-// COMPONENTE NAVBAR PUBLICO
 export default function PublicNavbar() {
+    const { isAuthenticated, user } = useAuth()
     return (
         <nav>
-            <Link to="/">Home</Link>
-            {" | "}
-            <Link to="/about">About</Link>
-            {" | "}
-            <Link to="/login">Login</Link>
-            <hr />
+            {isAuthenticated && (
+                <>
+                    <Link to="/">Home</Link>
+                    {" | "}
+                    <Link to="/productos">Productos</Link>
+                    <hr />
+                    <p>Usuario: {user?.name} | Rol: {user?.role}</p>
+                </>
+            )}
         </nav>
-    );
+    )
 }

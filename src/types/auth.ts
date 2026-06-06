@@ -1,14 +1,20 @@
-// ESTRUCTURA DE UN USUARIO AUTENTICADO
+export type Role = 'admin' | 'user';
+
 export interface User {
     id: number;
-    usuario: string;
-    rol: string;
+    username: string;
+    email: string;
+    role: Role;
+    name: string;
 }
 
-// INTERFACE QUE DEFINE LA RESPUESTA DEL LOGIN
-export interface LoginResponse {
-    success: boolean;
-    message: string;
-    user?: User;
+export interface LoginCredentials {
+    username: string;
+    password: string;
 }
-// EL USUARIO PUEDE EXISTIR O NO
+
+export interface AuthState {
+    user: User | null;
+    token: string | null;
+    isAuthenticated: boolean;
+}

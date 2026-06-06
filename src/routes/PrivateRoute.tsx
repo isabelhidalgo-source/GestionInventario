@@ -1,12 +1,22 @@
-import { Navigate } from "react-router-dom";
-//FUNCION QUE VERIFICA AUTENTICACION
-import { isAuthenticated } from "../utils/auth";
+import { ReactNode } from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+
 interface Props {
-    children: JSX.Element;
+    children: ReactNode;
+    requiredRole?: 'admin' | 'user';
 }
 
-// SI EL USUARIO ESTA AUTENTICADO: MUESTRA EL COMPONENTE HIJO
-// SI NO ESTA AUTENTICADO: REDIRECCIONA AL LOGIN
-export default function PrivateRoute({ children }: Props) {
-    return isAuthenticated() ? children : <Navigate to="/login" />;
-}
+const PrivateRoute = ({ children, requiredRole }: Props) => {
+    const { isAuthenticated, user } = useAuth();
+
+    if (!isAuthenticated) return <Navigate to="/login" replace />;
+
+    if (requiredRole && user?.role !== requiredRole) {
+        return <Navigate to="/unauthorized" replace />;
+    }
+
+    return <>{children}</>;
+};
+
+export default PrivateRoute;

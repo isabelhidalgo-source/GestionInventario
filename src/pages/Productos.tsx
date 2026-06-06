@@ -3,8 +3,15 @@ import { useEffect, useState } from "react";
 import {
     getProducts,
     createProduct,
+    updateProduct,
+    deleteProduct,
     type Product,
-} from "../services/productService";
+} from "../service/productService";
+
+import { useAuth } from "../context/AuthContext";
+import ProductForm from "../components/ProductForm";
+import ProductCard from "../components/ProductCard";
+import Button from "../components/Button";
 
 
 function Products() {
@@ -23,6 +30,11 @@ function Products() {
     // formulario
     const [title, setTitle] = useState("");
     const [price, setPrice] = useState(0);
+
+    const { user } = useAuth();
+
+    // editar
+    const [editingId, setEditingId] = useState<number | null>(null);
 
 
     // ==========================================
@@ -86,14 +98,10 @@ function Products() {
                     "https://i.pravatar.cc",
             };
 
-            const createdProduct =
-                await createProduct(newProduct);
+            const createdProduct = await createProduct(newProduct);
 
             // agregar al estado
-            setProducts([
-                ...products,
-                createdProduct,
-            ]);
+            setProducts([...products, createdProduct]);
 
             // limpiar formulario
             setTitle("");
@@ -104,6 +112,51 @@ function Products() {
         } catch (error) {
 
             setError("Error al crear producto");
+        }
+    };
+
+
+    const handleEdit = (p: Product) => {
+        setEditingId(p.id ?? null);
+        setTitle(p.title);
+        setPrice(p.price);
+    };
+
+    const handleUpdate = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!editingId) return;
+        try {
+            const prod: Product = {
+                title,
+                price,
+                description: "Producto editado desde React",
+                category: "general",
+                image: "https://i.pravatar.cc",
+            };
+
+            const updated = await updateProduct(editingId, prod);
+
+            setProducts(products.map((p) => (p.id === updated.id ? updated : p)));
+
+            setEditingId(null);
+            setTitle("");
+            setPrice(0);
+
+            alert("Producto actualizado");
+        } catch (error) {
+            setError("Error al actualizar producto");
+        }
+    };
+
+    const handleDelete = async (id?: number) => {
+        if (!id) return;
+        if (!confirm("Eliminar producto?")) return;
+        try {
+            await deleteProduct(id);
+            setProducts(products.filter((p) => p.id !== id));
+            alert("Producto eliminado");
+        } catch (error) {
+            setError("Error al eliminar producto");
         }
     };
 
@@ -121,33 +174,19 @@ function Products() {
             <hr />
 
             {/* FORMULARIO */}
-            <h2>Registrar Producto</h2>
-
-            <form onSubmit={handleSubmit}>
-
-                <input
-                    type="text"
-                    placeholder="Nombre producto"
-                    value={title}
-                    onChange={(e) =>
-                        setTitle(e.target.value)
-                    }
+            {user?.role === "admin" ? (
+                <ProductForm
+                    title={title}
+                    price={price}
+                    setTitle={setTitle}
+                    setPrice={setPrice}
+                    onSubmit={editingId ? handleUpdate : handleSubmit}
+                    editing={!!editingId}
+                    onCancel={() => { setEditingId(null); setTitle(''); setPrice(0); }}
                 />
-
-                <input
-                    type="number"
-                    placeholder="Precio"
-                    value={price}
-                    onChange={(e) =>
-                        setPrice(Number(e.target.value))
-                    }
-                />
-
-                <button type="submit">
-                    Guardar
-                </button>
-
-            </form>
+            ) : (
+                <p>Acceso de solo lectura. Inicia sesión como administrador para editar.</p>
+            )}
 
             <hr />
 
@@ -161,27 +200,18 @@ function Products() {
             }
 
             {/* LISTA */}
-            <h2>Lista de Productos</h2>
+            <h2>Catálogo de Productos</h2>
 
-            <ul>
-
+            <div className="product-list">
                 {products.map((product) => (
-
-                    <li key={product.id}>
-
-                        <strong>
-                            {product.title}
-                        </strong>
-
-                        <br />
-
-                        Precio:
-                        ${product.price}
-
-                    </li>
+                    <ProductCard
+                        key={product.id}
+                        product={product}
+                        onEdit={handleEdit}
+                        onDelete={handleDelete}
+                    />
                 ))}
-
-            </ul>
+            </div>
 
         </div>
     );

@@ -7,7 +7,7 @@ export default function Footer({ location, year }: FooterProps) {
     return (
         <footer className="footer">
             <div className="footer-content">
-                <p>© {year} Clínica Veterinaria</p>
+                <p>© {year} Sistema de Gestión de Inventario Tecnológico</p>
                 <span className="separator">|</span>
                 <p>{location}</p>
             </div>

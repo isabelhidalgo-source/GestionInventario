@@ -1,27 +1,25 @@
 // ELEMENTOS DE NAVEGACION
 import { Link, useNavigate } from "react-router-dom";
-// FUNCIONES PERSONALIZADAS
-import { logout, getUser } from "../utils/auth";
+import { useAuth } from "../context/AuthContext";
 
 // COMPONENTE NAVBAR PRIVADO
 export default function PrivateNavbar() {
-    //redireccionado
     const navigate = useNavigate();
-    //obtencion de usuario autenticado
-    const user = getUser();
-    //funcion para cerrar sesion
-    const handleLogout = () => { logout(); navigate("/login"); };
+    const { user, logout } = useAuth();
+
+    const handleLogout = async () => {
+        await logout();
+        navigate('/login');
+    }
 
     return (
         <nav>
-            <Link to="/dashboard">Dashboard</Link>
-            {" | "}
-            <Link to="/info">Info</Link>
+            <Link to="/productos">Productos</Link>
             {" | "}
             <button onClick={handleLogout}>Logout</button>
             <hr />
-            <p>Usuario: {" "} {user?.usuario}</p>
-            <p>Rol: {" "} {user?.rol}</p>
+            <p>Usuario: {user?.name ?? 'Invitado'}</p>
+            <p>Rol: {user?.role ?? 'N/A'}</p>
             <hr />
         </nav>
     );

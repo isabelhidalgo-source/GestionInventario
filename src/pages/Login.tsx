@@ -1,50 +1,81 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// Hooks React
+import { FormEvent, useState } from 'react'
+// Navegación rutas
+import { useNavigate } from 'react-router-dom'
+// Context autenticación JWT
+import { useAuth } from '../context/AuthContext'
 
-export default function Login() {
+const LoginPage = () => {
+    // Estado usuario input
+    const [usuario, setUsuario] = useState('')
+    // Estado password input
+    const [password, setPassword] = useState('')
+    // Estado mensaje error
+    const [error, setError] = useState('')
+    // Función login global
+    const { login } = useAuth()
+    // Navegación paginas
+    const navigate = useNavigate()
+    // Enviar formulario login
+    const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault()
+        setError('')
 
-    const navigate = useNavigate();
+        // Consumir login API
+        const success = await login(usuario, password)
 
-    // ESTADO PARA GUARDAR EL USERNAME
-    const [username, setUsername] = useState("");
-    // ESTADO PARA GUARDAR EL PASSWORD
-    const [password, setPassword] = useState("");
-
-    // FUNCION QUE SE EJECUTA AL ENVIAR EL FORMULARIO
-    const handleLogin = (e: React.FormEvent) => {
-
-        e.preventDefault();
-
-        // VALIDACION SIMPLE DE USUARIO Y PASSWORD
-        if (username === "admin" && password === "123") {
-
-            // GUARDA VARIABLES DE AUTENTICACION
-            localStorage.setItem("isAuth", "true");
-            localStorage.setItem("username", username);
-            //localStorage.setItem("password", password);
-
-            //REDIRECCION A DASHBOARD
-            navigate("/dashboard");
-
-        } else {
-            // MENSAJE DE ERROR SI LOS DATOS SON INCORRECTOS
-            alert("Datos incorrectos..");
-
+        // Login incorrecto
+        if (!success) {
+            setError('Credenciales incorrectas')
+            return
         }
-    };
+
+        // Redirigir al catálogo de productos
+        navigate('/productos')
+    }
 
     return (
-        <div>
-            <h1>Login</h1>
+        <div className="cajalogin" >
+            <h1>Login con JWT</h1>
+            <form onSubmit={handleSubmit}>
 
-            <form onSubmit={handleLogin}>
-                <input type="text" placeholder="Usuario" value={username} onChange={(e) => setUsername(e.target.value)} />
+                {/* Input usuario */}
+                <input
+                    type='text'
+                    placeholder='Usuario'
+                    value={usuario}
+                    onChange={(e) => setUsuario(e.target.value)}
+                />
+
                 <br /><br />
-                <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+
+                {/* Input password */}
+                <input
+                    type='password'
+                    placeholder='Password'
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+
                 <br /><br />
-                <button type="submit">Ingresar</button>
+
+                {/* Botón login */}
+                <button type='submit'>
+                    Ingresar
+                </button>
 
             </form>
+
+            {/* Mensaje error */}
+            {
+                error && (
+                    <p className="error">
+                        {error}
+                    </p>
+                )
+            }
         </div>
-    );
+    )
 }
+
+export default LoginPage

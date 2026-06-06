@@ -1,16 +1,24 @@
-//Funcion que verifica si el usuarioe sta autenticado
+// Compatibilidad: funciones antiguas usadas en algunas rutas/componentes
+// No usan React hooks para que las importaciones a nivel de módulo sigan funcionando.
+
 export function isAuthenticated(): boolean {
-    return localStorage.getItem("auth") === "true";
+    return !!localStorage.getItem('token')
 }
 
-// FUNCION PARA CERRAR SESION
 export function logout(): void {
-    localStorage.removeItem("auth");
-    localStorage.removeItem("user");
+    localStorage.removeItem('token')
 }
 
-// FUNCION QUE OBTIENE EL USUARIO GUARDADO
 export function getUser() {
-    const user = localStorage.getItem("user");
-    return user ? JSON.parse(user) : null;
+    const token = localStorage.getItem('token')
+    if (!token) return null
+    try {
+        const decoded = atob(token)
+        const username = decoded.replace(':token', '')
+        // Map simple roles compatible con la app legacy
+        const rol = username === 'admin' ? 'Administrador' : 'Invitado'
+        return { usuario: username, rol }
+    } catch (e) {
+        return null
+    }
 }

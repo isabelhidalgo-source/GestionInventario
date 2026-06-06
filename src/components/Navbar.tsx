@@ -4,17 +4,18 @@ type NavbarProps = {
     title: string;
 };
 
-import { useContext } from "react";
-import { UserContext } from "../context/UserContext";
+import { useAuth } from "../context/AuthContext";
 
 export default function Navbar({ title }: NavbarProps) {
-    const { user } = useContext(UserContext);
+    const { user } = useAuth();
 
     return (
         <header className="header">
             <div className="header-brand">
                 <img src={logoImg} alt="Logo" className="nav-logo" />
-                <h1>{title}-{user.name}|{user.role}</h1>
+                <h1>
+                    {title} - {user?.name ?? 'Invitado'} {user ? `| ${user.role}` : ''}
+                </h1>
             </div>
         </header>
     );

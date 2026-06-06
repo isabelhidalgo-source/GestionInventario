@@ -1,30 +1,26 @@
-/* Base */
 .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
     border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 14px;
     cursor: pointer;
-    border-radius: 5px;
+    transition: all 0.2s ease;
+    font-family: inherit;
 }
 
-/* Variantes */
-.primary {
-    background-color: #2563eb;
-    color: white;
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
-.secondary {
-    background-color: #6b7280;
-    color: white;
-}
-
-.danger {
-    background-color: #dc2626;
-    color: white;
-}
-
-/* Tamaños */
+/* Sizes */
 .small {
-    padding: 5px 10px;
-    font-size: 12px;
+    padding: 8px 16px;
+    font-size: 13px;
 }
 
 .medium {
@@ -33,12 +29,79 @@
 }
 
 .large {
-    padding: 15px 25px;
-    font-size: 18px;
+    padding: 12px 28px;
+    font-size: 15px;
 }
 
-/* Estado */
-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+/* Variants */
+.guardar {
+    background: #0ea5a4;
+    color: white;
+}
+
+.guardar:hover:not(:disabled) {
+    background: #0d9488;
+    box-shadow: 0 2px 8px rgba(14, 165, 164, 0.25);
+}
+
+.guardar:active:not(:disabled) {
+    background: #0c8a7f;
+}
+
+.eliminar {
+    background: #ef4444;
+    color: white;
+}
+
+.eliminar:hover:not(:disabled) {
+    background: #dc2626;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25);
+}
+
+.eliminar:active:not(:disabled) {
+    background: #b91c1c;
+}
+
+.cancelar {
+    background: #64748b;
+    color: white;
+}
+
+.cancelar:hover:not(:disabled) {
+    background: #475569;
+    box-shadow: 0 2px 8px rgba(100, 116, 139, 0.25);
+}
+
+.cancelar:active:not(:disabled) {
+    background: #334155;
+}
+
+.success {
+    background: #10b981;
+    color: white;
+}
+
+.success:hover:not(:disabled) {
+    background: #059669;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+}
+
+.success:active:not(:disabled) {
+    background: #047857;
+}
+
+.ghost {
+    background: transparent;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+}
+
+.ghost:hover:not(:disabled) {
+    background: #f1f5f9;
+    color: #334155;
+    border-color: #cbd5e1;
+}
+
+.ghost:active:not(:disabled) {
+    background: #e2e8f0;
 }
