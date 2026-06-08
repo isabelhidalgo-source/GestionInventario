@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 
 const PublicRoute = ({ children }: { children: ReactNode }) => {
     const { isAuthenticated } = useAuth();
-    return isAuthenticated ? <Navigate to="/productos" replace /> : <>{children}</>;
+    return isAuthenticated ? <Navigate to="/home" replace /> : <>{children}</>;
 };
 
 export default PublicRoute;

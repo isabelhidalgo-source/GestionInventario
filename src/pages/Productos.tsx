@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import {
     getProducts,
     createProduct,
@@ -13,19 +12,13 @@ import ProductForm from "../components/ProductForm";
 import ProductCard from "../components/ProductCard";
 import Button from "../components/Button";
 
-
 function Products() {
-
     // ==========================================
     // STATES
     // ==========================================
-
     const [products, setProducts] = useState<Product[]>([]);
-
     const [loading, setLoading] = useState(false);
-
     const [error, setError] = useState("");
-
 
     // formulario
     const [title, setTitle] = useState("");
@@ -36,85 +29,51 @@ function Products() {
     // editar
     const [editingId, setEditingId] = useState<number | null>(null);
 
-
     // ==========================================
     // GET PRODUCTS
     // ==========================================
-
     const loadProducts = async () => {
-
         try {
-
             setLoading(true);
-
             setError("");
-
             const data = await getProducts();
-
             setProducts(data);
-
         } catch (error) {
-
             setError("No se pudieron cargar los productos");
-
         } finally {
-
             setLoading(false);
         }
     };
 
-
     // cargar al iniciar
     useEffect(() => {
-
         loadProducts();
-
     }, []);
-
 
     // ==========================================
     // CREATE PRODUCT
     // ==========================================
-
-    const handleSubmit = async (
-        e: React.FormEvent
-    ) => {
-
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
         try {
-
             const newProduct: Product = {
-
                 title,
-
                 price,
-
                 description: "Producto creado desde React",
-
                 category: "general",
-
-                image:
-                    "https://i.pravatar.cc",
+                image: "",
             };
 
             const createdProduct = await createProduct(newProduct);
-
-            // agregar al estado
             setProducts([...products, createdProduct]);
 
-            // limpiar formulario
             setTitle("");
             setPrice(0);
-
             alert("Producto registrado");
-
         } catch (error) {
-
             setError("Error al crear producto");
         }
     };
-
 
     const handleEdit = (p: Product) => {
         setEditingId(p.id ?? null);
@@ -122,22 +81,41 @@ function Products() {
         setPrice(p.price);
     };
 
+    // ==========================================
+    // UPDATE PRODUCT (Corregido sin valores fijos)
+    // ==========================================
     const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!editingId) return;
+
+        // 1. Buscamos el producto actual tal y como existe en el estado local de React
+        const originalProduct = products.find((p) => p.id === editingId);
+        if (!originalProduct) return;
+
         try {
+            // 2. Fusionamos: Conservamos TODAS las propiedades originales intactas,
+            // pero sobrescribimos únicamente el 'title' y el 'price' modificados en el formulario
             const prod: Product = {
+                ...originalProduct,
                 title,
                 price,
-                description: "Producto editado desde React",
-                category: "general",
-                image: "https://i.pravatar.cc",
             };
 
             const updated = await updateProduct(editingId, prod);
 
-            setProducts(products.map((p) => (p.id === updated.id ? updated : p)));
+            // FakeStoreAPI a veces simula las respuestas de actualización de forma genérica.
+            // Para asegurar que tu interfaz se vea perfecta de inmediato en pantalla, 
+            // nos aseguramos de mezclar lo devuelto con las propiedades originales de la API
+            const finalUpdatedProduct = {
+                ...originalProduct,
+                ...updated
+            };
 
+            setProducts(
+                products.map((p) => (p.id === editingId ? finalUpdatedProduct : p))
+            );
+
+            // Limpiar formulario y estados
             setEditingId(null);
             setTitle("");
             setPrice(0);
@@ -150,7 +128,7 @@ function Products() {
 
     const handleDelete = async (id?: number) => {
         if (!id) return;
-        if (!confirm("Eliminar producto?")) return;
+        if (!confirm("¿Eliminar producto?")) return;
         try {
             await deleteProduct(id);
             setProducts(products.filter((p) => p.id !== id));
@@ -160,17 +138,12 @@ function Products() {
         }
     };
 
-
     // ==========================================
     // JSX
     // ==========================================
-
     return (
-
         <div>
-
             <h1>Productos</h1>
-
             <hr />
 
             {/* FORMULARIO */}
@@ -182,7 +155,11 @@ function Products() {
                     setPrice={setPrice}
                     onSubmit={editingId ? handleUpdate : handleSubmit}
                     editing={!!editingId}
-                    onCancel={() => { setEditingId(null); setTitle(''); setPrice(0); }}
+                    onCancel={() => {
+                        setEditingId(null);
+                        setTitle("");
+                        setPrice(0);
+                    }}
                 />
             ) : (
                 <p>Acceso de solo lectura. Inicia sesión como administrador para editar.</p>
@@ -191,13 +168,8 @@ function Products() {
             <hr />
 
             {/* MENSAJES */}
-            {loading &&
-                <p>Cargando productos...</p>
-            }
-
-            {error &&
-                <p>{error}</p>
-            }
+            {loading && <p>Cargando productos...</p>}
+            {error && <p>{error}</p>}
 
             {/* LISTA */}
             <h2>Catálogo de Productos</h2>
@@ -212,7 +184,6 @@ function Products() {
                     />
                 ))}
             </div>
-
         </div>
     );
 }

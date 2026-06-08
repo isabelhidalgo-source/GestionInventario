@@ -1,79 +1,73 @@
-// Hooks React
-import { FormEvent, useState } from 'react'
-// Navegación rutas
+import { useState } from 'react'
+import type { FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 // Context autenticación JWT
 import { useAuth } from '../context/AuthContext'
+import logo from '../assets/imagenes/logo.png'
 
 const LoginPage = () => {
-    // Estado usuario input
     const [usuario, setUsuario] = useState('')
-    // Estado password input
     const [password, setPassword] = useState('')
-    // Estado mensaje error
     const [error, setError] = useState('')
-    // Función login global
     const { login } = useAuth()
-    // Navegación paginas
     const navigate = useNavigate()
-    // Enviar formulario login
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
         setError('')
-
-        // Consumir login API
         const success = await login(usuario, password)
-
-        // Login incorrecto
         if (!success) {
             setError('Credenciales incorrectas')
             return
         }
-
-        // Redirigir al catálogo de productos
-        navigate('/productos')
+        navigate('/home')
     }
 
     return (
-        <div className="cajalogin" >
-            <h1>Login con JWT</h1>
-            <form onSubmit={handleSubmit}>
+        <div className="login-page">
+            <div className="login-container">
+                <div className="login-left">
+                    <div className="login-logo">
+                        <img src={logo} alt="Logo del sistema" />
+                    </div>
+                </div>
+                <div className="login-right">
+                    <div className="login-content">
+                        <h1>Login</h1>
 
-                {/* Input usuario */}
-                <input
-                    type='text'
-                    placeholder='Usuario'
-                    value={usuario}
-                    onChange={(e) => setUsuario(e.target.value)}
-                />
+                        <form onSubmit={handleSubmit} className="login-form">
+                            <div className="form-group">
+                                <input
+                                    type='text'
+                                    placeholder='Usuario'
+                                    value={usuario}
+                                    onChange={(e) => setUsuario(e.target.value)}
+                                    required
+                                />
+                            </div>
 
-                <br /><br />
+                            <div className="form-group">
+                                <input
+                                    type='password'
+                                    placeholder='Contraseña'
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                            </div>
 
-                {/* Input password */}
-                <input
-                    type='password'
-                    placeholder='Password'
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                            {error && (
+                                <p className="error">
+                                    {error}
+                                </p>
+                            )}
 
-                <br /><br />
-
-                {/* Botón login */}
-                <button type='submit'>
-                    Ingresar
-                </button>
-
-            </form>
-
-            {/* Mensaje error */}
-            {
-                error && (
-                    <p className="error">
-                        {error}
-                    </p>
-                )
-            }
+                            <button type='submit' className="btn-login">
+                                Ingresar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
