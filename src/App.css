@@ -815,3 +815,61 @@ table th {
     padding: 50px 20px;
   }
 }
+
+/*Pagina Not Found*/
+/* Centra todo en la pantalla */
+.not-found-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #0f172a;
+  /* Mismo fondo oscuro de tu Login */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Caja contenedora blanca/gris claro para que resalte */
+.not-found-box {
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  background: #ffffff;
+  padding: 40px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* El número grande en cian */
+.not-found-code {
+  font-size: 5rem;
+  margin: 0;
+  color: #0ea5a4;
+  /* Tu color cian de la variante "guardar" */
+  font-weight: 800;
+}
+
+/* Título del error */
+.not-found-title {
+  font-size: 1.5rem;
+  color: #1e293b;
+  margin: 10px 0;
+}
+
+/* Texto descriptivo */
+.not-found-text {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-bottom: 25px;
+}
+
+/* Centra tu componente Button y le da ancho completo si gustas */
+.not-found-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.not-found-actions .btn {
+  width: 100%;
+  /* El botón ocupa el ancho de la cajita */
+}

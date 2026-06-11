@@ -2,15 +2,7 @@
 // TYPE
 // ==========================================
 
-export type Product = {
-    id?: number;
-    title: string;
-    price: number;
-    description: string;
-    category: string;
-    image: string;
-};
-
+import type { Product, ProductFormData } from "../types/product";
 
 // URL API
 const URL = "https://fakestoreapi.com/products";
@@ -51,7 +43,7 @@ export const getProducts = async (): Promise<Product[]> => {
 // ==========================================
 
 export const createProduct = async (
-    product: Product
+    product: ProductFormData
 ): Promise<Product> => {
 
     try {
@@ -90,7 +82,7 @@ export const createProduct = async (
 
 export const updateProduct = async (
     id: number,
-    product: Product
+    product: ProductFormData
 ): Promise<Product> => {
     try {
         const response = await fetch(`${URL}/${id}`, {
