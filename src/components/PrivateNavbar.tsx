@@ -1,8 +1,7 @@
-// ELEMENTOS DE NAVEGACION
+// src/components/PrivateNavbar.tsx
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-// COMPONENTE NAVBAR PRIVADO
 export default function PrivateNavbar() {
     const navigate = useNavigate();
     const { user, logout } = useAuth();
@@ -10,21 +9,22 @@ export default function PrivateNavbar() {
     const handleLogout = async () => {
         await logout();
         navigate('/login');
-    }
+    };
 
     return (
         <div className="sidebar-menu">
             <div className="sidebar-brand">
-                <h2>Panel Administrativo</h2>
+                {/* 🔥 CAMBIO DE TÍTULO DEPENDIENDO DEL ROL */}
+                <h2>
+                    {user?.role === "admin" ? "Panel Admin" : " "}
+                </h2>
                 <p>{user?.name ?? 'Invitado'}</p>
             </div>
 
             <ul>
-                {/* 1. CAMBIO: Inicio ahora va a /home */}
                 <li>
                     <NavLink to="/home">Inicio</NavLink>
                 </li>
-                {/* 2. CAMBIO: Añadimos Store apuntando a /productos */}
                 <li>
                     <NavLink to="/productos">TechStore</NavLink>
                 </li>

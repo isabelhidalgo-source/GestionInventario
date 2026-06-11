@@ -1,22 +1,23 @@
-import { ReactNode } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 interface Props {
-    children: ReactNode;
     requiredRole?: 'admin' | 'user';
 }
 
-const PrivateRoute = ({ children, requiredRole }: Props) => {
-    const { isAuthenticated, user } = useAuth();
+const PrivateRoute = ({ requiredRole }: Props) => {
+    const { user } = useAuth(); // Asumiendo que user null significa no autenticado
 
-    if (!isAuthenticated) return <Navigate to="/login" replace />;
+    // Si no está logueado, al login
+    if (!user) return <Navigate to="/login" replace />;
 
+    // Si hay un rol requerido y el usuario no lo cumple, a unauthorized
     if (requiredRole && user?.role !== requiredRole) {
         return <Navigate to="/unauthorized" replace />;
     }
 
-    return <>{children}</>;
+    // Si todo está bien, renderiza las pantallas hijas
+    return <Outlet />;
 };
 
 export default PrivateRoute;

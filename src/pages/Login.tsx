@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 // Context autenticación JWT
 import { useAuth } from '../context/AuthContext'
 import logo from '../assets/imagenes/logo.png'
+// IMPORTAMOS TU COMPONENTE REUTILIZABLE
+import Button from '../components/Button'
 
 const LoginPage = () => {
     const [usuario, setUsuario] = useState('')
@@ -11,6 +13,7 @@ const LoginPage = () => {
     const [error, setError] = useState('')
     const { login } = useAuth()
     const navigate = useNavigate()
+
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
         setError('')
@@ -20,6 +23,11 @@ const LoginPage = () => {
             return
         }
         navigate('/home')
+    }
+
+    // ↩️ Regresar a la Landing Page
+    const handleCancel = () => {
+        navigate('/')
     }
 
     return (
@@ -61,9 +69,25 @@ const LoginPage = () => {
                                 </p>
                             )}
 
-                            <button type='submit' className="btn-login">
-                                Ingresar
-                            </button>
+                            {/* 🛠️ CONTENEDOR DE ACCIONES UTILIZANDO TU COMPONENTE */}
+                            <div className="login-actions">
+                                <Button
+                                    type="submit"
+                                    variant="success"
+                                    size="medium"
+                                >
+                                    Ingresar
+                                </Button>
+
+                                <Button
+                                    type="button"
+                                    variant="cancelar"
+                                    size="medium"
+                                    onClick={handleCancel}
+                                >
+                                    Cancelar
+                                </Button>
+                            </div>
                         </form>
                     </div>
                 </div>

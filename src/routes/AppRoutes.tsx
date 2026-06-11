@@ -1,9 +1,15 @@
-import { Routes, Route } from 'react-router-dom';
+// src/routes/AppRoutes.tsx
+import { Routes, Route, Navigate } from 'react-router-dom';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
+
+// Layouts
+import PublicLayout from '../layouts/PublicLayout';
 import LoginLayout from '../layouts/LoginLayout';
 import PrivateLayout from '../layouts/PrivateLayout';
 
+// Páginas
+import LandingPage from '../pages/LandingPage'; // 👈 Asegúrate de importar tu nueva LandingPage
 import Login from '../pages/Login';
 import Home from '../pages/Home';
 import Productos from '../pages/Productos';
@@ -12,19 +18,32 @@ import Unauthorized from '../pages/Unauthorized';
 
 const AppRoutes = () => (
     <Routes>
-        {/* Rutas de login */}
-        <Route element={<LoginLayout />}>
-            <Route path="/" element={<PublicRoute><Login /></PublicRoute>} />
-            <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+        {/* 🌐 CAPA PÚBLICA: Protegida por PublicRoute (redirige a /home si ya hay sesión) */}
+        <Route element={<PublicRoute />}>
+
+            {/* 1. DISEÑO PORTADA: Usa PublicLayout para mostrar la barra de navegación superior */}
+            <Route element={<PublicLayout />}>
+                {/* 🔥 AQUÍ ESTÁ EL CAMBIO: Ahora la raíz muestra tu Landing Page */}
+                <Route path="/" element={<LandingPage />} />
+            </Route>
+
+            {/* 2. DISEÑO LOGIN: Conserva tu LoginLayout centrado exclusivo para el formulario */}
+            <Route element={<LoginLayout />}>
+                {/* El login se desplaza exclusivamente a su propia ruta */}
+                <Route path="/login" element={<Login />} />
+            </Route>
+
         </Route>
 
-        {/* Rutas privadas */}
-        <Route element={<PrivateRoute><PrivateLayout /></PrivateRoute>}>
-            <Route path="/home" element={<Home />} />
-            <Route path="/productos" element={<Productos />} />
+        {/* 🔐 CAPA PRIVADA: Solo usuarios logueados */}
+        <Route element={<PrivateRoute />}>
+            <Route element={<PrivateLayout />}>
+                <Route path="/home" element={<Home />} />
+                <Route path="/productos" element={<Productos />} />
+            </Route>
         </Route>
 
-        {/* Rutas de error */}
+        {/* 🚨 RUTAS DE ERROR GLOBALES */}
         <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="*" element={<NotFound />} />
     </Routes>
