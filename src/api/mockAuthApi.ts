@@ -13,7 +13,7 @@ const users: Record<string, { password: string; user: User }> = {
     },
 };
 
-// Simple token generation (not secure) - base64 of username
+
 const makeToken = (username: string) => btoa(username + ":token");
 
 export const loginRequest = async (usuario: string, password: string) => {
