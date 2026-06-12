@@ -17,15 +17,9 @@ export default function Unauthorized() {
                 <div className="unauthorized-actions">
                     <button
                         className="btn-unauthorized-primary"
-                        onClick={() => navigate("/inicio")}
-                    >
-                        Volver al inicio
-                    </button>
-                    <button
-                        className="btn-unauthorized-secondary"
                         onClick={() => navigate(-1)}
                     >
-                        Regresar a la página anterior
+                        Volver al inicio
                     </button>
                 </div>
             </div>
