@@ -507,6 +507,7 @@ button:hover {
 }
 
 .login-left {
+  flex: 1;
   background: linear-gradient(135deg, #233d72 0%, #2d5a8c 100%);
   display: flex;
   justify-content: center;
@@ -945,8 +946,8 @@ table th {
 }
 
 .tecno-product-list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 20px;
 }
 
@@ -1206,6 +1207,100 @@ table th {
   width: 100%;
 }
 
+/* --- UNAUTHORIZED --- */
+.unauthorized-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.unauthorized-box {
+  text-align: center;
+  max-width: 420px;
+  width: 100%;
+  background: #ffffff;
+  padding: 40px 28px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.unauthorized-icon {
+  font-size: 3.5rem;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.unauthorized-code {
+  font-size: 4rem;
+  margin: 0 0 4px;
+  color: #ef4444;
+  font-weight: 800;
+  letter-spacing: -2px;
+}
+
+.unauthorized-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 10px;
+}
+
+.unauthorized-text {
+  color: #64748b;
+  font-size: 0.92rem;
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+.unauthorized-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-unauthorized-primary {
+  background: linear-gradient(135deg, #233d72 0%, #2563eb 100%);
+  color: #fff;
+  border: none;
+  padding: 11px 20px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.btn-unauthorized-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-unauthorized-secondary {
+  background: transparent;
+  color: #64748b;
+  border: 1.5px solid #e2e8f0;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-unauthorized-secondary:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
 /* --- ANIMACIONES --- */
 @keyframes fadeInUp {
   from {
@@ -1368,6 +1463,7 @@ table th {
   }
 
   .login-left {
+    flex: 1;
     min-height: unset;
     padding: 36px 28px;
   }
@@ -1450,6 +1546,10 @@ table th {
 
   .catalogo-title {
     font-size: 26px;
+  }
+
+  .tecno-product-list {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   /* Landing */
@@ -1569,6 +1669,7 @@ table th {
   }
 
   .login-left {
+    flex: 1;
     padding: 40px;
   }
 
@@ -1621,6 +1722,10 @@ table th {
 
   .catalogo-title {
     font-size: 28px;
+  }
+
+  .tecno-product-list {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   /* Landing */
