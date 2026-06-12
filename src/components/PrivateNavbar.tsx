@@ -29,6 +29,11 @@ export default function PrivateNavbar() {
                     <NavLink to="/productos">TechStore</NavLink>
                 </li>
 
+                {/* 🌟 NUEVO ENLACE: Agregado en la lista para ver el catálogo tecnológico */}
+                <li>
+                    <NavLink to="/tecno-catalogo">Catálogo Tecno</NavLink>
+                </li>
+
                 {user?.role === "admin" && (
                     <li>
                         <NavLink to="/admin/usuarios">Usuarios</NavLink>

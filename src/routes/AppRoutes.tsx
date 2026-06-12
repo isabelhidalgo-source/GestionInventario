@@ -16,6 +16,7 @@ import Productos from '../pages/Productos';
 import NotFound from '../pages/NotFound';
 import Unauthorized from '../pages/Unauthorized';
 import Usuarios from "../pages/Usuarios";
+import TecnoCatalogo from '../pages/TecnoCatalogo';
 
 const AppRoutes = () => (
     <Routes>
@@ -41,6 +42,7 @@ const AppRoutes = () => (
             <Route element={<PrivateLayout />}>
                 <Route path="/home" element={<Home />} />
                 <Route path="/productos" element={<Productos />} />
+                <Route path="/tecno-catalogo" element={<TecnoCatalogo />} />
             </Route>
         </Route>
 
