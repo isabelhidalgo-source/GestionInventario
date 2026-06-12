@@ -1,4 +1,4 @@
-// src/pages/Productos.tsx
+
 import { useEffect, useState } from "react";
 import {
     getProducts,
@@ -30,12 +30,38 @@ function Productos() {
 
     const [formData, setFormData] = useState<ProductFormData>(initialFormState);
 
-    // Estados de validaciones visuales
     const [clases, setClases] = useState<Record<string, string>>({});
     const [mensajes, setMensajes] = useState<Record<string, string>>({});
     const [colores, setColores] = useState<Record<string, string>>({});
 
-    // Evaluación dinámica en el evento onBlur
+    useEffect(() => {
+        document.title = "Catálogo de Productos | Tecnopolis";
+
+        let metaDescription = document.querySelector('meta[name="description"]');
+        if (!metaDescription) {
+            metaDescription = document.createElement('meta');
+            metaDescription.setAttribute('name', 'description');
+            document.head.appendChild(metaDescription);
+        }
+        metaDescription.setAttribute('content', 'Explora nuestro catálogo de hardware de élite, componentes de alto rendimiento y gadgets en Tecnopolis. Administra, añade o edita productos en tiempo real.');
+
+        const ogTags = [
+            { property: "og:title", content: "Catálogo de Productos - Tecnopolis" },
+            { property: "og:description", content: "Encuentra procesadores, tarjetas gráficas y soluciones de hardware premium listos para optimizar tu entorno digital." },
+            { property: "og:type", content: "website" }
+        ];
+
+        ogTags.forEach(({ property, content }) => {
+            let ogTag = document.querySelector(`meta[property="${property}"]`);
+            if (!ogTag) {
+                ogTag = document.createElement('meta');
+                ogTag.setAttribute('property', property);
+                document.head.appendChild(ogTag);
+            }
+            ogTag.setAttribute('content', content);
+        });
+    }, []);
+
     const handleBlurField = (field: keyof ProductFormData) => {
         const value = formData[field];
 
@@ -160,46 +186,54 @@ function Productos() {
     };
 
     return (
-        <div>
-            <h1>Productos</h1>
+        <main style={{ padding: '20px', fontFamily: 'system-ui, sans-serif' }}>
+            <header>
+                <h1>Productos</h1>
+            </header>
             <hr />
 
-            {user?.role === "admin" ? (
-                <ProductForm
-                    formData={formData}
-                    setFormData={setFormData}
-                    onSubmit={editingId ? handleUpdate : handleSubmit}
-                    editing={!!editingId}
-                    onCancel={() => {
-                        setEditingId(null);
-                        setFormData(initialFormState);
-                        limpiarValidaciones();
-                    }}
-                    clases={clases}
-                    mensajes={mensajes}
-                    colores={colores}
-                    onBlurField={handleBlurField}
-                />
-            ) : (
-                <p>Acceso de solo lectura. Inicia sesión como administrador para editar.</p>
-            )}
-
-            <hr />
-            {loading && <p>Cargando productos...</p>}
-            {error && <p style={{ color: 'red', fontWeight: 'bold' }}>{error}</p>}
-
-            <h2>Catálogo de Productos</h2>
-            <div className="product-list">
-                {products.map((product) => (
-                    <ProductCard
-                        key={product.id}
-                        product={product}
-                        onEdit={handleEdit}
-                        onDelete={handleDelete}
+            <section aria-label="Área de administración de productos">
+                {user?.role === "admin" ? (
+                    <ProductForm
+                        formData={formData}
+                        setFormData={setFormData}
+                        onSubmit={editingId ? handleUpdate : handleSubmit}
+                        editing={!!editingId}
+                        onCancel={() => {
+                            setEditingId(null);
+                            setFormData(initialFormState);
+                            limpiarValidaciones();
+                        }}
+                        clases={clases}
+                        mensajes={mensajes}
+                        colores={colores}
+                        onBlurField={handleBlurField}
                     />
-                ))}
-            </div>
-        </div>
+                ) : (
+                    <p>Acceso de solo lectura. Inicia sesión como administrador para editar.</p>
+                )
+                }
+            </section>
+
+            <hr />
+
+            {loading && <p role="status">Cargando productos...</p>}
+            {error && <p role="alert" style={{ color: 'red', fontWeight: 'bold' }}>{error}</p>}
+
+            <section aria-label="Listado oficial de tecnologías">
+                <h2>Catálogo de Productos</h2>
+                <div className="product-list" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+                    {products.map((product) => (
+                        <ProductCard
+                            key={product.id}
+                            product={product}
+                            onEdit={handleEdit}
+                            onDelete={handleDelete}
+                        />
+                    ))}
+                </div>
+            </section>
+        </main>
     );
 }
 

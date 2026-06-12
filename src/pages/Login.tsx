@@ -1,5 +1,5 @@
 // src/pages/LoginPage.tsx
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
@@ -11,7 +11,6 @@ const LoginPage = () => {
     const [password, setPassword] = useState('')
     const [errorGlobal, setErrorGlobal] = useState('')
 
-    // Estados para mensajes, colores y clases (Estilo de la rúbrica del docente)
     const [mensajeUsuario, setMensajeUsuario] = useState('')
     const [mensajePassword, setMensajePassword] = useState('')
     const [colorUsuario, setColorUsuario] = useState('')
@@ -22,9 +21,35 @@ const LoginPage = () => {
     const { login } = useAuth()
     const navigate = useNavigate()
 
-    // 🌟 SE ACTIVA AL SALIR DEL INPUT USUARIO (onBlur)
+    useEffect(() => {
+        document.title = "Iniciar Sesión | Tecnopolis";
+
+        let metaDescription = document.querySelector('meta[name="description"]');
+        if (!metaDescription) {
+            metaDescription = document.createElement('meta');
+            metaDescription.setAttribute('name', 'description');
+            document.head.appendChild(metaDescription);
+        }
+        metaDescription.setAttribute('content', 'Inicia sesión de forma segura en Tecnopolis para gestionar tu cuenta, revisar el catálogo tecnológico y acceder a las herramientas de administración.');
+
+        const ogTags = [
+            { property: "og:title", content: "Iniciar Sesión - Tecnopolis" },
+            { property: "og:description", content: "Ingresa de forma segura a tu panel de control y soluciones de hardware premium." },
+            { property: "og:type", content: "website" }
+        ];
+
+        ogTags.forEach(({ property, content }) => {
+            let ogTag = document.querySelector(`meta[property="${property}"]`);
+            if (!ogTag) {
+                ogTag = document.createElement('meta');
+                ogTag.setAttribute('property', property);
+                document.head.appendChild(ogTag);
+            }
+            ogTag.setAttribute('content', content);
+        });
+    }, []);
+
     const handleBlurUsuario = () => {
-        // Si el campo quedó completamente vacío, limpiamos los mensajes y bordes
         if (usuario.trim() === "") {
             setMensajeUsuario("")
             setClaseUsuario("")
@@ -42,9 +67,7 @@ const LoginPage = () => {
         }
     }
 
-    // 🌟 SE ACTIVA AL SALIR DEL INPUT PASSWORD (onBlur)
     const handleBlurPassword = () => {
-        // Si el campo quedó completamente vacío, limpiamos los mensajes y bordes
         if (password === "") {
             setMensajePassword("")
             setClasePassword("")
@@ -66,7 +89,6 @@ const LoginPage = () => {
         e.preventDefault()
         setErrorGlobal('')
 
-        // Forzar la validación visual al enviar en caso de que intenten dar click directo a ingresar
         if (usuario.length < 3 || password.length < 4) {
             handleBlurUsuario()
             handleBlurPassword()
@@ -83,28 +105,27 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="login-page">
+        <main className="login-page">
             <div className="login-container">
-                <div className="login-left">
+                <section className="login-left" aria-label="Identidad corporativa">
                     <div className="login-logo">
-                        <img src={logo} alt="Logo del sistema" />
+                        <img src={logo} alt="Logotipo oficial de Tecnopolis" />
                     </div>
-                </div>
-                <div className="login-right">
+                </section>
+                <section className="login-right" aria-label="Formulario de ingreso">
                     <div className="login-content">
                         <h1>Login</h1>
 
                         <form onSubmit={handleSubmit} className="login-form" noValidate>
 
-                            {/* CAMPO: USUARIO */}
                             <div className="form-group">
+                                <label htmlFor="username-input" className="sr-only" style={{ display: 'none' }}>Usuario</label>
                                 <input
+                                    id="username-input"
                                     type='text'
                                     placeholder='Usuario'
                                     value={usuario}
-                                    /* El cambio se guarda de forma limpia sin lanzar errores inmediatamente */
                                     onChange={(e) => setUsuario(e.target.value)}
-                                    /* 🌟 Ejecuta la validación del docente SOLO al salir del campo */
                                     onBlur={handleBlurUsuario}
                                     className={claseUsuario}
                                 />
@@ -115,14 +136,14 @@ const LoginPage = () => {
                                 )}
                             </div>
 
-                            {/* CAMPO: CONTRASEÑA */}
                             <div className="form-group">
+                                <label htmlFor="password-input" className="sr-only" style={{ display: 'none' }}>Contraseña</label>
                                 <input
+                                    id="password-input"
                                     type='password'
                                     placeholder='Contraseña'
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    /* 🌟 Ejecuta la validación del docente SOLO al salir del campo */
                                     onBlur={handleBlurPassword}
                                     className={clasePassword}
                                 />
@@ -145,9 +166,9 @@ const LoginPage = () => {
                             </div>
                         </form>
                     </div>
-                </div>
+                </section>
             </div>
-        </div>
+        </main>
     )
 }
 
