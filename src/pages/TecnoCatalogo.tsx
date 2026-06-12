@@ -1,11 +1,12 @@
 // src/pages/TecnoCatalogo.tsx
 import TecnoCard from "../components/TecnoCard";
-import type { Product } from "../types/product";
+import type { Tecnologia } from "../types/product"; // 🌟 Importamos el tipo exclusivo
 import defaultProductImg from "../assets/imagenes/default.png";
 
 export default function TecnoCatalogo(): JSX.Element {
 
-    const productosTecnologicos: Product[] = [
+    // 🌟 El arreglo ahora está tipado estrictamente con Tecnologia[]
+    const productosTecnologicos: Tecnologia[] = [
         {
             id: 1,
             title: "Teclado Mecánico RGB",
@@ -33,7 +34,6 @@ export default function TecnoCatalogo(): JSX.Element {
     ];
 
     return (
-        /* 🌟 Usamos nombres de clase únicos para no chocar con otros divs globales */
         <div className="tecno-catalogo-container">
 
             <div className="catalogo-header">
@@ -45,7 +45,7 @@ export default function TecnoCatalogo(): JSX.Element {
                 {productosTecnologicos.map((dispositivo) => (
                     <TecnoCard
                         key={dispositivo.id}
-                        product={dispositivo}
+                        tecnologia={dispositivo} /* 🌟 Pasamos la propiedad como tecnologia */
                     />
                 ))}
             </div>

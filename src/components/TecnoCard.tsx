@@ -1,22 +1,23 @@
 // src/components/TecnoCard.tsx
-import type { Product } from "../types/product";
+import type { Tecnologia } from "../types/product"; // 🌟 Importamos el nuevo nombre
 
 interface Props {
-    product: Product;
+    tecnologia: Tecnologia; // 🌟 Cambiado de product a tecnologia
 }
 
-function TecnoCard({ product }: Props): JSX.Element {
+function TecnoCard({ tecnologia }: Props): JSX.Element {
     return (
         <div className="card product-card">
             <div className="product-image-container">
-                <img src={product.image} alt={product.title} className="product-img" />
+                {/* 🌟 Ahora usamos tecnologia.image y tecnologia.title */}
+                <img src={tecnologia.image} alt={tecnologia.title} className="product-img" />
             </div>
             <div className="product-info">
-                <span className="product-category-badge">{product.category}</span>
-                <h3 className="product-title">{product.title}</h3>
-                <p className="product-description">{product.description}</p>
+                <span className="product-category-badge">{tecnologia.category}</span>
+                <h3 className="product-title">{tecnologia.title}</h3>
+                <p className="product-description">{tecnologia.description}</p>
                 <div className="product-meta">
-                    <span className="product-price">${product.price.toFixed(2)}</span>
+                    <span className="product-price">${tecnologia.price.toFixed(2)}</span>
                 </div>
             </div>
         </div>
