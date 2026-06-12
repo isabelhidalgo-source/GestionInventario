@@ -1,4 +1,5 @@
-import { Role, User } from '../types/auth';
+// src/utils/authUtils.ts
+import type { Role } from '../types/auth'; // 🌟 Se queda solo Role, importado correctamente como tipo
 
 /**
  * Comprueba si existe un token en el almacenamiento local.
@@ -29,7 +30,7 @@ export function getUser(): { username: string; role: Role } | null {
         // 2. Limpiar el sufijo ':token' del string legacy
         const username = decoded.replace(':token', '');
 
-        // 3. Mapeo estricto de roles (sin textos en español que rompan la app)
+        // 3. Mapeo estricto de roles 
         const role: Role = username === 'admin' ? 'admin' : 'user';
 
         // 4. Retornamos solo los datos reales extraídos y normalizados

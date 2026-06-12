@@ -1,15 +1,15 @@
 // src/components/TecnoCard.tsx
-import type { Tecnologia } from "../types/product"; // 🌟 Importamos el nuevo nombre
+import type { Tecnologia } from "../types/product";
 
 interface Props {
-    tecnologia: Tecnologia; // 🌟 Cambiado de product a tecnologia
+    tecnologia: Tecnologia;
 }
 
-function TecnoCard({ tecnologia }: Props): JSX.Element {
+// 🌟 SOLUCIÓN: Removemos ": JSX.Element" para limpiar el error de TypeScript
+function TecnoCard({ tecnologia }: Props) {
     return (
         <div className="card product-card">
             <div className="product-image-container">
-                {/* 🌟 Ahora usamos tecnologia.image y tecnologia.title */}
                 <img src={tecnologia.image} alt={tecnologia.title} className="product-img" />
             </div>
             <div className="product-info">
