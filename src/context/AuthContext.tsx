@@ -1,7 +1,9 @@
-//centraliza toda la autenticación JWT del sistema.
-//para compartir el usuario autenticado y las funciones login/logout en toda la app
+// centraliza toda la autenticación JWT del sistema.
+// para compartir el usuario autenticado y las funciones login/logout en toda la app
 // Hooks y tipos de React
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
+import type { ReactNode } from 'react' // 🌟 SOLUCIÓN: Importación exclusiva de tipo para cumplir con verbatimModuleSyntax
+
 // Funciones API JWT (mock para demo)
 import { loginRequest, verifyRequest, logoutRequest } from '../api/mockAuthApi'
 // Tipo User

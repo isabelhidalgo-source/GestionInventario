@@ -1,11 +1,12 @@
 // src/pages/TecnoCatalogo.tsx
 import TecnoCard from "../components/TecnoCard";
-import type { Tecnologia } from "../types/product"; // 🌟 Importamos el tipo exclusivo
+import type { Tecnologia } from "../types/product";
 import defaultProductImg from "../assets/imagenes/default.png";
 
-export default function TecnoCatalogo(): JSX.Element {
+// 🌟 Removemos ": JSX.Element" para solucionar el error del namespace de JSX
+export default function TecnoCatalogo() {
 
-    // 🌟 El arreglo ahora está tipado estrictamente con Tecnologia[]
+    // Arreglo de datos simulados utilizando el tipo exclusivo Tecnologia
     const productosTecnologicos: Tecnologia[] = [
         {
             id: 1,
@@ -45,7 +46,7 @@ export default function TecnoCatalogo(): JSX.Element {
                 {productosTecnologicos.map((dispositivo) => (
                     <TecnoCard
                         key={dispositivo.id}
-                        tecnologia={dispositivo} /* 🌟 Pasamos la propiedad como tecnologia */
+                        tecnologia={dispositivo}
                     />
                 ))}
             </div>
