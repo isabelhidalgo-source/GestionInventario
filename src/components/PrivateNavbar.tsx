@@ -14,7 +14,6 @@ export default function PrivateNavbar() {
     return (
         <div className="sidebar-menu">
             <div className="sidebar-brand">
-                {/* 🔥 CAMBIO DE TÍTULO DEPENDIENDO DEL ROL */}
                 <h2>
                     {user?.role === "admin" ? "Panel Admin" : " "}
                 </h2>
@@ -29,7 +28,6 @@ export default function PrivateNavbar() {
                     <NavLink to="/productos">TechStore</NavLink>
                 </li>
 
-                {/* 🌟 NUEVO ENLACE: Agregado en la lista para ver el catálogo tecnológico */}
                 <li>
                     <NavLink to="/tecno-catalogo">Catálogo Tecno</NavLink>
                 </li>

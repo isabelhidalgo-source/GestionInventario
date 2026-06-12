@@ -25,7 +25,6 @@ export const loginRequest = async (usuario: string, password: string) => {
     }
 
     const token = makeToken(usuario);
-    // persist token in localStorage to simulate server-issued token
     localStorage.setItem("token", token);
 
     return { token, user: entry.user };

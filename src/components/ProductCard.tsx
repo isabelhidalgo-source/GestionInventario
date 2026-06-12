@@ -3,7 +3,6 @@ import Button from './Button';
 import './ProductCard.css';
 import type { Product } from '../types/product';
 
-// 1. IMPORTA TU IMAGEN DE ASSETS AQUÍ:
 import defaultProductImg from '../assets/imagenes/default.png';
 
 interface Props {
@@ -16,8 +15,6 @@ const ProductCard = ({ product, onEdit, onDelete }: Props) => {
     const { user } = useAuth();
     const isAdmin = user?.role === 'admin';
 
-    // 2. VALIDACIÓN LOGICA: 
-    // Si la imagen no existe, es el marcador pravatar, o está vacía, usamos la de assets
     const displayImage = !product.image || product.image.includes("pravatar.cc")
         ? defaultProductImg
         : product.image;
@@ -26,7 +23,7 @@ const ProductCard = ({ product, onEdit, onDelete }: Props) => {
         <article className="product-card">
             <div className="image-wrapper">
                 <img
-                    src={displayImage} // 3. USAMOS LA VARIABLE INTERNA CON VALIDACIÓN
+                    src={displayImage}
                     alt={`Imagen de ${product.title}`}
                     className="image"
                     loading="lazy"

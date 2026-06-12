@@ -1,11 +1,9 @@
-// src/components/TecnoCard.tsx
 import type { Tecnologia } from "../types/product";
 
 interface Props {
     tecnologia: Tecnologia;
 }
 
-// 🌟 SOLUCIÓN: Removemos ": JSX.Element" para limpiar el error de TypeScript
 function TecnoCard({ tecnologia }: Props) {
     return (
         <div className="card product-card">

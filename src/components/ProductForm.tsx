@@ -10,7 +10,6 @@ type Props = {
     editing?: boolean
     onCancel?: () => void
 
-    // Control visual de errores por campo
     clases: Record<string, string>
     mensajes: Record<string, string>
     colores: Record<string, string>

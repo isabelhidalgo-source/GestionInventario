@@ -48,7 +48,7 @@ export default function Unauthorized() {
                 <div className="unauthorized-actions">
                     <button
                         className="btn-unauthorized-primary"
-                        onClick={() => navigate(-1)}
+                        onClick={() => navigate('/home')}
                     >
                         Volver al inicio
                     </button>
