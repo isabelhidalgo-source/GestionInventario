@@ -873,3 +873,256 @@ table th {
   width: 100%;
   /* El botón ocupa el ancho de la cajita */
 }
+
+/* ==========================================================================
+   Usuarios
+   ========================================================================== */
+
+/* ==========================================================================
+   ESTILOS GENERALES Y CONTENEDOR
+   ========================================================================== */
+.users-crud-container {
+  padding: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.users-crud-container h2 {
+  font-size: 1.6rem;
+  color: #1e293b;
+  margin-bottom: 24px;
+}
+
+/* ==========================================================================
+   DISEÑO DEL FORMULARIO DE REGISTRO / EDICIÓN
+   ========================================================================== */
+.users-form {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 32px;
+  /* Espacio para separar el formulario de la tabla inferior */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.users-form h3 {
+  font-size: 1.15rem;
+  color: #334155;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+/* Cuadrícula limpia de 2 columnas para organizar los 4 campos */
+.form-group-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  /* Espacio uniforme entre filas y columnas de campos */
+  margin-bottom: 20px;
+}
+
+/* 🎨 DISEÑO UNIFICADO: Mismo aspecto para Nombre, Username, Email y Select */
+.form-group-grid input,
+.form-group-grid select {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  color: #334155;
+  background-color: #f8fafc;
+  /* Fondo grisáceo muy claro */
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+/* Efecto visual al hacer clic en cualquier campo */
+.form-group-grid input:focus,
+.form-group-grid select:focus {
+  outline: none;
+  border-color: #0ea5a4;
+  /* Cambia al color institucional */
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(14, 165, 164, 0.12);
+}
+
+/* Ajuste específico para el select de roles */
+.form-group-grid select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23475569'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+  padding-right: 40px;
+  /* Evita que el texto se monte sobre la flecha */
+}
+
+/* Botones del formulario */
+.form-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* ==========================================================================
+   DISEÑO Y ESPACIADO DE LA TABLA
+   ========================================================================== */
+.users-table {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+/* Espaciado interno de celdas para que respire la información */
+.users-table th,
+.users-table td {
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.users-table th {
+  background-color: #f1f5f9;
+  color: #475569;
+  font-weight: 600;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.users-table tr {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.users-table tr:last-child {
+  border-bottom: none;
+}
+
+/* Acomodo de los botones de acción en las filas */
+.table-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Código del username en la tabla */
+.users-table code {
+  background-color: #f1f5f9;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #0f172a;
+}
+
+/* ==========================================================================
+   ETIQUETAS DE ROL (BADGES)
+   ========================================================================== */
+.role-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.badge-admin {
+  background-color: rgba(14, 165, 164, 0.1);
+  color: #0ea5a4;
+  border: 1px solid rgba(14, 165, 164, 0.2);
+}
+
+.badge-user {
+  background-color: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
+}
+
+/* Validaciones*/
+/* Clases exactas del ejemplo del docente */
+.correcto {
+  border-color: green;
+}
+
+.error {
+  border-color: red;
+}
+
+/* El texto del mensaje que se inyecta abajo */
+.mensaje-validacion {
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  display: block;
+}
+
+/*HOME*/
+/* ==========================================
+   ESTILOS PRINCIPALES (NIVEL INICIAL)
+   ========================================== */
+
+/* 1. Caja de Bienvenida Superior */
+.welcome-header {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 30px;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+}
+
+/* Texto del saludo */
+.welcome-user {
+  font-size: 16px;
+  color: #333333;
+  margin-bottom: 15px;
+}
+
+/* Etiqueta del Rol */
+.role-tag {
+  background-color: #e0e0e0;
+  color: #000000;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* Descripción de la Tienda */
+.store-description h3 {
+  font-size: 24px;
+  color: #0f2c59;
+  /* Tu color oscuro principal */
+  margin-top: 0;
+}
+
+.store-description p {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #555555;
+}
+
+/* 2. Contenedor de Tarjetas (Alineación simple en fila) */
+.cards {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* Estilo Base de las Tarjetas */
+.card {
+  background-color: #ffffff;
+  flex: 1;
+  /* Hace que todas las tarjetas midan lo mismo */
+  padding: 20px;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+}
+
+.card h3 {
+  margin-top: 0;
+  color: #0f2c59;
+}
+
+.card p {
+  font-size: 14px;
+  color: #666666;
+}

@@ -15,6 +15,7 @@ import Home from '../pages/Home';
 import Productos from '../pages/Productos';
 import NotFound from '../pages/NotFound';
 import Unauthorized from '../pages/Unauthorized';
+import Usuarios from "../pages/Usuarios";
 
 const AppRoutes = () => (
     <Routes>
@@ -40,6 +41,12 @@ const AppRoutes = () => (
             <Route element={<PrivateLayout />}>
                 <Route path="/home" element={<Home />} />
                 <Route path="/productos" element={<Productos />} />
+            </Route>
+        </Route>
+
+        <Route element={<PrivateRoute requiredRole="admin" />}>
+            <Route element={<PrivateLayout />}>
+                <Route path="/admin/usuarios" element={<Usuarios />} />
             </Route>
         </Route>
 

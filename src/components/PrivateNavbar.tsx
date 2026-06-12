@@ -28,6 +28,12 @@ export default function PrivateNavbar() {
                 <li>
                     <NavLink to="/productos">TechStore</NavLink>
                 </li>
+
+                {user?.role === "admin" && (
+                    <li>
+                        <NavLink to="/admin/usuarios">Usuarios</NavLink>
+                    </li>
+                )}
             </ul>
 
             <button type="button" className="btn-secondary logout-button" onClick={handleLogout}>
